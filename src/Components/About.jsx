@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from './header';
+import Footer from './footer';
 
 export default function About() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,8 +38,8 @@ export default function About() {
                     </p>
                 </div>
             </div>
-
-
+            {/* Footer Section */}
+            <Footer mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
         </div>
     );
 }

@@ -1,8 +1,9 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './header';
+import Footer from './footer';
 
 export default function SelfeniHome() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -11,7 +12,6 @@ export default function SelfeniHome() {
         <div className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
             {/* Header */}
             <Header mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
-
 
             {/* Hero Section */}
             <div className="relative isolate px-6 pt-29 lg:px-8">
@@ -25,8 +25,9 @@ export default function SelfeniHome() {
                         transparence.
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-x-6">
+                        {/* Navigate to the Form */}
                         <Link
-                            to="#"
+                            to="/formulaire"
                             className="rounded-md bg-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-lg hover:bg-indigo-500 transition"
                         >
                             Commencer maintenant
@@ -52,14 +53,9 @@ export default function SelfeniHome() {
                     />
                 </div>
             </div>
+
             {/* Footer Section */}
-            <footer className="bg-gray-100 py-6">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
-                    <p className="text-sm text-gray-500">
-                        © 2024 Selfeni. All rights reserved.
-                    </p>
-                </div>
-            </footer>
+            <Footer mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
         </div>
     );
 }

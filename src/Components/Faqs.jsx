@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from './header';
+import Footer from './footer';
 
 const faqs = [
     {
@@ -25,20 +26,19 @@ const faqs = [
 ];
 
 export default function FAQPage() {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // Manage mobile menu state
-
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     return (
         <div className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
             {/* Sticky Header */}
             <header className="sticky top-0 z-10 bg-white shadow-md">
                 <Header
                     mobileMenuOpen={mobileMenuOpen}
-                    setMobileMenuOpen={setMobileMenuOpen} // Pass state and setter
+                    setMobileMenuOpen={setMobileMenuOpen}
                 />
             </header>
 
             {/* FAQ Section */}
-            <div className="relative isolate px-6 py-16 sm:py-24 lg:px-8">
+            <div className="relative isolate px-6  py-16 sm:py-24 lg:px-8">
                 {/* Background Blur Effect */}
                 <div
                     aria-hidden="true"
@@ -70,7 +70,7 @@ export default function FAQPage() {
                     <dl className="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:gap-x-10">
                         {faqs.map((faq) => (
                             <div key={faq.id} className="bg-gray-50 p-6 rounded-lg shadow">
-                                <dt className="text-lg font-semibold text-gray-900">{faq.question}</dt>
+                                <dt className="text-lg font-semibold text-indigo-600">{faq.question}</dt>
                                 <dd className="mt-2 text-base text-gray-600">{faq.answer}</dd>
                             </div>
                         ))}
@@ -79,13 +79,7 @@ export default function FAQPage() {
             </div>
 
             {/* Footer Section */}
-            <footer className="bg-gray-100 py-6">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
-                    <p className="text-sm text-gray-500">
-                        © 2024 Selfeni. All rights reserved.
-                    </p>
-                </div>
-            </footer>
+            <Footer mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
         </div>
     );
 }
