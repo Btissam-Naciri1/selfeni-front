@@ -1,0 +1,130 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 40px; /* Ajuste la taille de la photo de profil */
+  height: 40px;
+  border-radius: 50%; /* Pour un effet circulaire */
+  margin-right: 10px; /* Espace entre la photo et le texte */
+}
+
+.topbar-center {
+  flex-grow: 1; /* Permet à la barre de recherche de prendre de l'espace */
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar {
+  width: 100%; /* Prend toute la largeur disponible */
+  max-width: 400px; /* Limite la largeur maximale */
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 20px; /* Arrondir les bords */
+  outline: none; /* Supprime le contour par défaut */
+}
+
+.search-bar::placeholder {
+  color: #aaa; /* Couleur du texte de l'espace réservé */
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Aligner les éléments à droite */
+}
+
+.notification-button {
+  background: none; /* Pas de fond */
+  border: none; /* Pas de bordure */
+  cursor: pointer; /* Pointeur au survol */
+  padding: 0; /* Pas de padding */
+  margin-right: 15px; /* Espacement entre l'icône et la photo de profil */
+}
+
+.notification-icon {
+  font-size: 24px; /* Ajuste la taille de l'icône de notification */
+  color: black; /* Couleur de l'icône */
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover; /* Pour que l'image reste bien dans le cercle */
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .topbar {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  .topbar-center {
+      margin: 10px 0; /* Espace vertical pour mobile */
+  }
+}
+.logout-button {
+  background-color: rgb(255, 255, 255); /* Fond blanc */
+  color: #485466; /* Couleur du texte */
+  border: 2px solid #4f46e5; /* Bordure assortie */
+  border-radius: 5px; /* Coins arrondis */
+  padding: 8px 15px; /* Espace intérieur */
+  font-size: 14px; /* Taille du texte */
+  cursor: pointer; /* Pointeur sur clic */
+  margin-left: 15px; /* Espacement avec la photo de profil */
+  transition: all 0.3s ease; /* Transition fluide */
+}
+
+.logout-button:hover {
+  background-color: #4f46e5; /* Fond coloré au survol */
+  color: rgb(255, 255, 255); /* Texte blanc au survol */
+}
+
+.logout-button:active {
+  background-color: #3b4252; /* Couleur plus foncée lors du clic */
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #ffffff; /* Même couleur que l'arrière-plan général */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Ombre subtile */
+  border-bottom: 1px solid #ffffff; /* Bordure fine pour séparer visuellement */
+}
+
+.notification-icon {
+  font-size: 24px;
+  color: #485466; /* Couleur harmonisée */
+}
+
+.logout-button {
+  background-color: #f9f9f9; /* Même couleur que la topbar */
+  color: #485466;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #485466;
+  color: #fff;
+}
