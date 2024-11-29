@@ -1,0 +1,216 @@
+/* Conteneur principal */
+.clientslist-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tableau */
+.clientslist-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.clientslist-table th,
+.clientslist-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.clientslist-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+/* Boutons d'actions */
+.action-button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+
+.action-button:hover {
+  opacity: 0.9;
+}
+.clientslist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.clientslist-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.clientslist-header button {
+  background-color: #4f46e5;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.clientslist-header button:hover {
+  background-color: #4338ca;
+}
+.clientslist-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.clientslist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.clientslist-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clientslist-table th,
+.clientslist-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.clientslist-table th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+.action-btn {
+  margin: 0 5px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.view-btn:hover {
+  color: #4f46e5; /* Indigo */
+}
+
+.score-btn:hover {
+  color: #fbbf24; /* Yellow */
+}
+.clientslist-container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  width: 90%; /* Largeur de la table, ajustable */
+  margin-left: 50px; /* Réduisez cette valeur pour déplacer la liste vers la gauche */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.clientslist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.clientslist-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clientslist-table th,
+.clientslist-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.clientslist-table th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+.action-btn {
+  margin: 0 5px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.view-btn:hover {
+  color: #4f46e5; /* Indigo */
+}
+
+.score-btn:hover {
+  color: #fbbf24; /* Yellow */
+}
+/* Boutons View More/Less */
+.clientslist-header button {
+  background-color: white; /* Fond blanc */
+  color: #4f46e5; /* Texte couleur indigo */
+  border: 2px solid #4f46e5; /* Bordure indigo */
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease; /* Animation fluide */
+}
+
+.clientslist-header button:hover {
+  background-color: #4f46e5; /* Fond indigo au survol */
+  color: white; /* Texte blanc au survol */
+}
+/* Boutons simples pour les actions */
+.simple-btn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #333;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.simple-btn:hover {
+  background-color: #f3f4f6; /* Gris clair au survol */
+  border-color: #bbb; /* Bordure plus foncée au survol */
+}
+
+.simple-btn.view-btn {
+  border-color: #4f46e5; /* Bordure indigo */
+  color: #4f46e5;
+}
+
+.simple-btn.view-btn:hover {
+  background-color: #eef2ff; /* Indigo très clair au survol */
+}
+
+.simple-btn.score-btn {
+  border-color: #f59e0b; /* Bordure jaune */
+  color: #f59e0b;
+}
+
+.simple-btn.score-btn:hover {
+  background-color: #fffbeb; /* Jaune très clair au survol */
+}
