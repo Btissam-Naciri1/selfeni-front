@@ -6,6 +6,8 @@ import Contact from './Components/Contact';
 import Faqs from './Components/Faqs';
 import Login from'./Components/login'
 import Formulaire from './Components/Formulaire';
+import MonCompte from './Components/moncompte';
+import EditProfile from './Components/editprofile';
 
 function App() {
     return (
@@ -17,6 +19,8 @@ function App() {
                 <Route path="/faqs" element={<Faqs />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/formulaire" element={<Formulaire />} />
+                <Route path="/moncompte" element={<MonCompte/>} />
+                <Route path="/EditProfile" element={<EditProfile/>} />
             </Routes>
         </Router>
     );

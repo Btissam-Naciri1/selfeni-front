@@ -8,8 +8,8 @@ import Footer from './footer';
 export default function Formulaire() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [step, setStep] = useState(1); // Current step
-    const [amount, setAmount] = useState(10000);
-    const [duration, setDuration] = useState(24);
+    const [loan_amount, setAmount] = useState(10000);
+    const [loan_amount_term, setDuration] = useState(24);
     const [monthlyPayment, setMonthlyPayment] = useState(469.4);
 
     const handleNextStep = () => {
@@ -24,10 +24,10 @@ export default function Formulaire() {
         alert('Les informations saisies ont été validées avec succès.');
     };
 
-    const calculateMonthlyPayment = (amount, duration) => {
+    const calculateMonthlyPayment = (loan_amount, loan_amount_term) => {
         const rate = 0.05; // Example 5% annual interest rate
         const monthlyRate = rate / 12;
-        const payment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -duration));
+        const payment = (loan_amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -loan_amount_term));
         setMonthlyPayment(payment.toFixed(2));
     };
 
@@ -66,28 +66,28 @@ export default function Formulaire() {
                             <form>
                                 {/* Amount */}
                                 <div className="mb-6">
-                                    <label htmlFor="amount" className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label htmlFor="loan_amount" className="block text-sm font-medium text-gray-700 mb-2">
     Montant (en DH):
 </label>
 <div className="flex items-center gap-4">
     <input
         type="number"
-        value={amount}
+        value={loan_amount}
         readOnly
         className="w-24 text-center py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 font-bold text-indigo-600"
     />
     <input
         type="range"
-        id="amount"
-        name="amount"
+        id="loan_amount"
+        name="loan_amount"
         min="1000"
         max="500000"
         step="1000"
-        value={amount}
+        value={loan_amount}
         onChange={(e) => {
             const value = parseInt(e.target.value, 10);
             setAmount(value);
-            calculateMonthlyPayment(value, duration);
+            calculateMonthlyPayment(value, loan_amount_term);
         }}
         className="w-full h-2 bg-indigo-300 rounded-lg appearance-none cursor-pointer focus:outline-none"
     />
@@ -96,28 +96,28 @@ export default function Formulaire() {
 
 {/* Duration */}
 <div className="mb-6">
-    <label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-2">
+    <label htmlFor="loan_amount_term" className="block text-sm font-medium text-gray-700 mb-2">
         Durée (en mois):
     </label>
     <div className="flex items-center gap-4">
         <input
             type="number"
-            value={duration}
+            value={loan_amount_term}
             readOnly
             className="w-24 text-center py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 font-bold text-indigo-600"
         />
         <input
             type="range"
-            id="duration"
-            name="duration"
+            id="loan_amount_term"
+            name="loan_amount_term"
             min="6"
             max="60"
             step="1"
-            value={duration}
+            value={loan_amount_term}
             onChange={(e) => {
                 const value = parseInt(e.target.value, 10);
                 setDuration(value);
-                calculateMonthlyPayment(amount, value);
+                calculateMonthlyPayment(loan_amount, value);
             }}
             className="w-full h-2 bg-indigo-300 rounded-lg appearance-none cursor-pointer focus:outline-none"
         />

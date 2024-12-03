@@ -1,12 +1,30 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from './header';
 import Footer from './footer';
 
 export default function SelfeniHome() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const navigate = useNavigate();
+
+    // Check if user is logged in by verifying access token in localStorage
+    const isUserLoggedIn = () => {
+        const accessToken = localStorage.getItem('access_token');
+        return accessToken ? true : false;  // Check if access token exists
+    };
+
+    // Handler for the "Commencer maintenant" button click
+    const handleStartNowClick = () => {
+        if (!isUserLoggedIn()) {
+            // Redirect to login page if the user is not logged in
+            navigate('/login');
+        } else {
+            // Navigate to the form page if the user is logged in
+            navigate('/formulaire');
+        }
+    };
 
     return (
         <div className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
@@ -25,13 +43,13 @@ export default function SelfeniHome() {
                         transparence.
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-x-6">
-                        {/* Navigate to the Form */}
-                        <Link
-                            to="/formulaire"
+                        {/* Navigate to the Form or Login depending on the user authentication */}
+                        <button
+                            onClick={handleStartNowClick}
                             className="rounded-md bg-indigo-600 px-6 py-3 text-sm font-bold text-white shadow-lg hover:bg-indigo-500 transition"
                         >
                             Commencer maintenant
-                        </Link>
+                        </button>
                         <Link
                             to="#"
                             className="text-sm font-semibold text-gray-800 hover:text-indigo-600 transition"
