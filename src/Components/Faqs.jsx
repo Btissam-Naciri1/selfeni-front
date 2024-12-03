@@ -3,11 +3,7 @@ import Header from './header';
 import Footer from './footer';
 
 const faqs = [
-    {
-        id: 1,
-        question: "What's the best thing about Switzerland?",
-        answer: "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
-    },
+
     {
         id: 2,
         question: "How do I use Selfeni?",
@@ -23,22 +19,46 @@ const faqs = [
         question: "Can I contact support?",
         answer: "Yes, our support team is available 24/7. Use the 'Contact Us' section to reach out via email or chat.",
     },
+    {
+        id: 5,
+        question: "What is Selfeni?",
+        answer: "Selfeni is a smart and fast credit management app that analyzes your data to assess your eligibility and guides you transparently through your processes.",
+    },
+    {
+        id: 6,
+        question: "How does Selfeni evaluate my credit eligibility?",
+        answer: "Selfeni uses advanced algorithms to analyze your financial data and provide a detailed assessment of your credit eligibility in a matter of minutes.",
+    },
+    {
+        id: 7,
+        question: "Is Selfeni secure?",
+        answer: "Yes! Selfeni uses cutting-edge encryption and security measures to ensure that your personal and financial data is fully protected.",
+    },
+    {
+        id: 8,
+        question: "Can I access Selfeni from anywhere?",
+        answer: "Yes, Selfeni is available 24/7 on any device with an internet connection. You can use it from the comfort of your home or on the go.",
+    },
+    {
+        id: 9,
+        question: "How do I get started with Selfeni?",
+        answer: "Getting started with Selfeni is simple: Download the app or visit our website, create your account, enter your details, and let Selfeni handle the rest.",
+    },
+
 ];
 
 export default function FAQPage() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     return (
         <div className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-            {/* Sticky Header */}
-            <header className="sticky top-0 z-10 bg-white shadow-md">
-                <Header
-                    mobileMenuOpen={mobileMenuOpen}
-                    setMobileMenuOpen={setMobileMenuOpen}
-                />
-            </header>
+
+            <Header
+                mobileMenuOpen={mobileMenuOpen}
+                setMobileMenuOpen={setMobileMenuOpen}
+            />
 
             {/* FAQ Section */}
-            <div className="relative isolate px-6  py-16 sm:py-24 lg:px-8">
+            <div className="relative isolate px-6 py-16 sm:py-24 lg:px-8 mt-20"> {/* Added mt-20 for spacing */}
                 {/* Background Blur Effect */}
                 <div
                     aria-hidden="true"

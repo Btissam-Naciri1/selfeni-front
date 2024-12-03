@@ -6,7 +6,15 @@ export default function SimpleContactForm() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex flex-col">
+        <div
+            className="bg-cover bg-center bg-no-repeat min-h-screen flex flex-col"
+            style={{
+                backgroundImage: "url('/images/background.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                imageRendering: "auto",
+            }}
+        >
             {/* Sticky Header */}
             <header className="sticky top-0 z-10 bg-white shadow-md">
                 <Header
@@ -16,7 +24,7 @@ export default function SimpleContactForm() {
             </header>
 
             {/* Contact Form Section */}
-            <div className="flex-grow flex items-center justify-center px-6 py-24">
+            <div className="flex-grow flex items-center justify-center px-6 py-40 bg-transparent">
                 <div className="bg-white p-10 rounded-xl shadow-lg max-w-xl w-full space-y-6">
                     <h2 className="text-3xl font-extrabold text-indigo-600 text-center sm:text-4xl">
                         L'ÉQUIPE EST À VOTRE DISPOSITION
@@ -53,7 +61,6 @@ export default function SimpleContactForm() {
 
                         {/* Subject Field */}
                         <div>
-
                             <input
                                 type="text"
                                 id="subject"
@@ -76,6 +83,7 @@ export default function SimpleContactForm() {
                             />
                         </div>
 
+                        {/* Submit Button */}
                         <button
                             type="submit"
                             className="w-full bg-indigo-600 text-white font-medium py-2.5 rounded-lg shadow hover:bg-indigo-500 transition duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

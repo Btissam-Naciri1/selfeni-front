@@ -19,11 +19,13 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }) {
                 className="flex items-center justify-between bg-white/90 backdrop-blur-md p-6 lg:px-8 rounded-b-lg shadow-md">
                 <div className="flex items-center gap-6 lg:flex-1">
                     <Link to="/" className="flex items-center gap-4">
-                        <img
-                            alt="Selfeni Logo"
-                            src="/images/Selefni.png"
-                            className="h-12 w-auto "
-                        />
+                        <div className="h-16 w-auto flex items-center justify-center">
+                            <img
+                                alt="Selfeni Logo"
+                                src="/images/Selefni.png"
+                                className="h-28 w-40 object-contain"
+                            />
+                        </div>
                     </Link>
                 </div>
 
@@ -62,11 +64,13 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }) {
                     className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm">
                     <div className="flex items-center justify-between">
                         <Link to="/" className="-m-1.5 p-1.5 flex items-center gap-2">
-                        <img
-                                alt="Selfeni Logo"
-                                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                                className="h-8 w-auto"
-                            />
+                            <div className="h-12 w-auto flex items-center justify-center">
+                                <img
+                                    alt="Selfeni Logo"
+                                    src="/images/Selefni.png"
+                                    className="h-16 w-auto object-contain"
+                                />
+                            </div>
                             <span className="text-lg font-semibold text-indigo-600">Selfeni</span>
                         </Link>
                         <button
