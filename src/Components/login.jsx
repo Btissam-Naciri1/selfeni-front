@@ -41,7 +41,7 @@ const Login = () => {
                 // Optionally, auto-login after registration
                 localStorage.setItem('access_token', response.data.access);
                 localStorage.setItem('refresh_token', response.data.refresh);
-                navigate('/dashboard');  // Redirect to dashboard after successful registration
+                navigate('/');  // Redirect to dashboard after successful registration
             } else {
                 // Login
                 const response = await axios.post('http://127.0.0.1:8000/api/login/', {
