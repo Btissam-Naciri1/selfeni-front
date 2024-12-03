@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   return (
     
-    <div className="dashboard-wrapper">
+    <div className="dashboard-wrapper overflow-hidden  relative h-screen">
       {/* Arrière-plan stylisé */}
       <div
         aria-hidden="true"

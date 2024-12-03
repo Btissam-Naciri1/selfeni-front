@@ -90,3 +90,9 @@
     }
   }
   
+  .dashboard-wrapper {
+    height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Prevent scrolling */
+    position: relative;
+  }
+  
