@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './header';
 import Footer from './footer';
@@ -12,7 +12,6 @@ const MonCompte = () => {
     const [credits, setCredits] = useState([]);
 
     const [currentPage, setCurrentPage] = useState(1);
-
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -57,24 +56,9 @@ const MonCompte = () => {
 
         fetchCredits();
     }, []); // Fetch data on component mount
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p className="text-red-500">{error}</p>;
-
-   /* const user = {
-        name: 'Jean Dupont',
-        email: 'jeandupont@gmail.com',
-        phone: '+33 6 12 34 56 78',
-        address: '123 Rue de Paris, 75000 Paris',
-        creditStatus: 'Approved',
-    };*/
-
-    /* Simulated credit data
-    const credits = [
-        { statut: 'En cours', montant: 5000, duree: 24 },
-        { statut: 'Approuvé', montant: 10000, duree: 36 },
-        { statut: 'Refusé', montant: 2000, duree: 12 },
-        // Add more rows as needed
-    ];*/
 
     const itemsPerPage = 3; // You can change this to show more or fewer items per page
     const totalItems = credits.length;
@@ -96,7 +80,7 @@ const MonCompte = () => {
             <Header mobileMenuOpen={false} setMobileMenuOpen={() => {}} />
 
             {/* Profile Section */}
-            <div className="max-w-7xl mx-auto px-6 py-16 mt-32">
+            <div className="max-w-7xl mx-auto px-6 py-16 mt-32 relative">
                 <div className="bg-white shadow-lg rounded-lg p-8">
                     <h2 className="text-3xl font-extrabold text-indigo-700 mb-8">Mon Profil</h2>
 
@@ -110,24 +94,19 @@ const MonCompte = () => {
                                 <p><strong>Téléphone:</strong> {user.telephone}</p>
                                 <p><strong>Adresse:</strong> {user.adresse}</p>
                             </div>
-                            <div className="mt-6">
-                                <Link
-                                    to="/editprofile"
-                                    className="inline-flex items-center text-indigo-600 hover:text-indigo-800"
-                                >
-                                    Modifier mon profil
-                                </Link>
-                            </div>
-                        </div>
-
-                        {/* Credit Status */}
-                        <div>
-                            <h3 className="text-xl font-semibold text-gray-800">État de mon Crédit</h3>
-                            <div className="mt-4 space-y-2 text-gray-600">
-                                <p><strong>Statut:</strong> {user.creditStatus}</p>
-                            </div>
                         </div>
                     </div>
+
+                    {/* Button to Edit Profile - Right side, centered vertically */}
+                    <div className="absolute top-1/2 right-60 transform -translate-y-1/2">
+                        <Link
+                            to="/editprofile"
+                            className="inline-flex items-center bg-indigo-600 text-white font-semibold px-6 py-3 rounded-md shadow-lg hover:bg-indigo-700 transition"
+                        >
+                            Modifier mon profil
+                        </Link>
+                    </div>
+
                 </div>
             </div>
 
