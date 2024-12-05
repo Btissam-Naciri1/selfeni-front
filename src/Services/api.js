@@ -10,7 +10,7 @@ api.interceptors.request.use(
     async (config) => {
         const accessToken = localStorage.getItem('access_token');
         if (accessToken) {
-            config.headers.Authorization = Bearer ${accessToken};
+            config.headers.Authorization = `Bearer ${accessToken}`;
         }
         return config;
     },
@@ -37,7 +37,7 @@ api.interceptors.response.use(
                         refresh: refreshToken,
                     });
                     localStorage.setItem('access_token', data.access);
-                    originalRequest.headers.Authorization = Bearer ${data.access};
+                    originalRequest.headers.Authorization = `Bearer ${data.access}`;
                     return axios(originalRequest);
                 } catch (refreshError) {
                     localStorage.removeItem('access_token');

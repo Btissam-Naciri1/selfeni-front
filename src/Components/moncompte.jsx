@@ -1,27 +1,81 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './header';
 import Footer from './footer';
+import axios from "axios";
 
 const MonCompte = () => {
 
-    const user = {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [credits, setCredits] = useState([]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const token = localStorage.getItem("access_token"); // Get access token from localStorage
+                const response = await axios.get("http://127.0.0.1:8000/api/profile/", {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+                    },
+                });
+
+                setUser(response.data); // Set the user data
+                setLoading(false); // Stop the loading state
+            } catch (err) {
+                console.error("Error fetching profile:", err);
+                setError("Failed to fetch profile data");
+                setLoading(false);
+            }
+        };
+
+        fetchProfile();
+    }, []); // Run only once on component mount
+
+    useEffect(() => {
+        const fetchCredits = async () => {
+            try {
+                const token = localStorage.getItem("access_token"); // Get the token from localStorage
+                const response = await axios.get("http://127.0.0.1:8000/api/credits/", {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Include the Authorization header
+                    },
+                });
+
+                setCredits(response.data); // Set the fetched data to the state
+                setLoading(false); // Stop loading
+            } catch (err) {
+                console.error("Error fetching credits:", err);
+                setError("Failed to fetch credit data");
+                setLoading(false);
+            }
+        };
+
+        fetchCredits();
+    }, []); // Fetch data on component mount
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p className="text-red-500">{error}</p>;
+
+   /* const user = {
         name: 'Jean Dupont',
         email: 'jeandupont@gmail.com',
         phone: '+33 6 12 34 56 78',
         address: '123 Rue de Paris, 75000 Paris',
         creditStatus: 'Approved',
-    };
+    };*/
 
-    // Simulated credit data
+    /* Simulated credit data
     const credits = [
         { statut: 'En cours', montant: 5000, duree: 24 },
         { statut: 'Approuvé', montant: 10000, duree: 36 },
         { statut: 'Refusé', montant: 2000, duree: 12 },
         // Add more rows as needed
-    ];
+    ];*/
 
-    const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3; // You can change this to show more or fewer items per page
     const totalItems = credits.length;
 
@@ -51,10 +105,10 @@ const MonCompte = () => {
                         <div>
                             <h3 className="text-xl font-semibold text-gray-800">Informations Personnelles</h3>
                             <div className="mt-4 space-y-2 text-gray-600">
-                                <p><strong>Nom:</strong> {user.name}</p>
+                                <p><strong>Nom:</strong> {user.nom} {user.prenom}</p>
                                 <p><strong>Email:</strong> {user.email}</p>
-                                <p><strong>Téléphone:</strong> {user.phone}</p>
-                                <p><strong>Adresse:</strong> {user.address}</p>
+                                <p><strong>Téléphone:</strong> {user.telephone}</p>
+                                <p><strong>Adresse:</strong> {user.adresse}</p>
                             </div>
                             <div className="mt-6">
                                 <Link
@@ -96,7 +150,7 @@ const MonCompte = () => {
                             {currentItems.map((credit, index) => (
                                 <tr key={index} className="border-b hover:bg-gray-50">
                                     <td className="py-3 px-6 text-sm text-gray-800">{credit.statut}</td>
-                                    <td className="py-3 px-6 text-sm text-gray-800">{credit.montant} €</td>
+                                    <td className="py-3 px-6 text-sm text-gray-800">{credit.montant_demande} MAD</td>
                                     <td className="py-3 px-6 text-sm text-gray-800">{credit.duree} mois</td>
                                 </tr>
                             ))}

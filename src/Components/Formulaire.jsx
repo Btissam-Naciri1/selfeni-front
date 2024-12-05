@@ -3,6 +3,8 @@
 
 import React, { useState } from 'react';
 import Header from './header';
+import axios from 'axios';
+
 import Footer from './footer';
 
 export default function Formulaire() {
@@ -12,9 +14,82 @@ export default function Formulaire() {
     const [loan_amount_term, setDuration] = useState(24);
     const [monthlyPayment, setMonthlyPayment] = useState(469.4);
 
-    const handleNextStep = () => {
-        if (step < 3) setStep(step + 1);
+    const handleNextStep = async () => {
+        if (step < 3) {
+            try {
+                // Get the access token from localStorage
+                const accessToken = localStorage.getItem("access_token");
+    
+                // Call the API with the access token
+                const response = await axios.post(
+                    "http://127.0.0.1:8000/api/credits/",
+                    {
+                        montant_demande: loan_amount,
+                        duree: loan_amount_term,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    }
+                );
+    
+                console.log("Response from API:", response.data);
+    
+                // Proceed to the next step only if the API call is successful
+                setStep(step + 1);
+            } catch (error) {
+                // Check if the error is due to token expiration
+                if (error.response && error.response.status === 401) {
+                    console.error("Access token expired. Refreshing...");
+    
+                    try {
+                        // Refresh the token
+                        const refreshResponse = await axios.post(
+                            "http://127.0.0.1:8000/api/token/refresh/",
+                            {
+                                refresh: localStorage.getItem("refresh_token"),
+                            }
+                        );
+    
+                        // Update the access token in localStorage
+                        localStorage.setItem("access_token", refreshResponse.data.access);
+    
+                        // Retry the original request with the new token
+                        const retryResponse = await axios.post(
+                            "http://127.0.0.1:8000/api/credits/",
+                            {
+                                montant_demande: loan_amount,
+                                duree: loan_amount_term,
+                            },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${refreshResponse.data.access}`,
+                                },
+                            }
+                        );
+    
+                        console.log("Response from API after refreshing token:", retryResponse.data);
+    
+                        // Proceed to the next step
+                        setStep(step + 1);
+                    } catch (refreshError) {
+                        console.error("Error refreshing token:", refreshError);
+                        // Optionally, log out the user if refreshing fails
+                        alert("Session expired. Please log in again.");
+                        // Clear tokens and redirect to login page
+                        localStorage.removeItem("access_token");
+                        localStorage.removeItem("refresh_token");
+                        window.location.href = "/login";
+                    }
+                } else {
+                    console.error("Error calling API:", error);
+                    // Optionally, handle other API errors
+                }
+            }
+        }
     };
+    
 
     const handlePreviousStep = () => {
         if (step > 1) setStep(step - 1);
