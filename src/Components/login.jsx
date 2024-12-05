@@ -23,36 +23,36 @@ const Login = () => {
 
         try {
             if (isRegistering) {
-                // Registration
+                // Inscription
                 if (password !== confirmPassword) {
                     setError("Les mots de passe ne correspondent pas.");
                     return;
                 }
 
                 const response = await axios.post('http://127.0.0.1:8000/api/user/register/', {
-                    nom, // Updated field name
-                    prenom, // Updated field name
+                    nom,
+                    prenom,
                     email,
-                    telephone, // Updated field name
-                    adresse, // Updated field name
+                    telephone,
+                    adresse,
                     password,
                 });
 
-                // Optionally, auto-login after registration
+                // Optionnellement, auto-login après l'inscription
                 localStorage.setItem('access_token', response.data.access);
                 localStorage.setItem('refresh_token', response.data.refresh);
-                navigate('/');  // Redirect to dashboard after successful registration
+                navigate('/');  // Redirige vers la page d'accueil après une inscription réussie
             } else {
-                // Login
+                // Connexion
                 const response = await axios.post('http://127.0.0.1:8000/api/login/', {
                     email,
                     password,
                 });
 
-                // Save tokens to local storage
+                // Sauvegarde des tokens dans le local storage
                 localStorage.setItem('access_token', response.data.access);
                 localStorage.setItem('refresh_token', response.data.refresh);
-                navigate('/moncompte');  // Redirect to user account page after login
+                navigate('/moncompte');  // Redirige vers la page du compte utilisateur après la connexion
             }
         } catch (error) {
             if (error.response && error.response.data) {
@@ -78,15 +78,15 @@ const Login = () => {
                     />
                 </div>
 
-                {/* Form Content */}
+                {/* Contenu du formulaire */}
                 <div className="sm:mx-auto sm:w-full sm:max-w-md">
                     <img
                         className="mx-auto h-10 w-auto"
                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        alt="Your Company"
+                        alt="Votre entreprise"
                     />
                     <h2 className="mt-14 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">
-                        {isRegistering ? 'Create an account' : 'Sign in to your account'}
+                        {isRegistering ? 'Créer un compte' : 'Se connecter à votre compte'}
                     </h2>
                 </div>
 
@@ -169,7 +169,7 @@ const Login = () => {
 
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Email address
+                                    Adresse e-mail
                                 </label>
                                 <div className="mt-2">
                                     <input
@@ -187,7 +187,7 @@ const Login = () => {
 
                             <div>
                                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Password
+                                    Mot de passe
                                 </label>
                                 <div className="mt-2">
                                     <input
@@ -206,7 +206,7 @@ const Login = () => {
                             {isRegistering && (
                                 <div>
                                     <label htmlFor="confirm-password" className="block text-sm font-medium leading-6 text-gray-900">
-                                        Confirm Password
+                                        Confirmer mot de passe
                                     </label>
                                     <div className="mt-2">
                                         <input
@@ -228,7 +228,7 @@ const Login = () => {
                                     type="submit"
                                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
-                                    {isRegistering ? 'Create account' : 'Sign in'}
+                                    {isRegistering ? 'Créer un compte' : 'Se connecter'}
                                 </button>
                             </div>
                         </form>
@@ -238,7 +238,7 @@ const Login = () => {
                                 onClick={() => setIsRegistering(!isRegistering)}
                                 className="text-sm font-semibold text-indigo-600 hover:text-indigo-500"
                             >
-                                {isRegistering ? 'Already have an account? Sign in' : 'Not registered yet? Create an account'}
+                                {isRegistering ? 'Déjà un compte ? Se connecter' : 'Pas encore inscrit ? Créer un compte'}
                             </button>
                         </div>
                     </div>
@@ -250,4 +250,3 @@ const Login = () => {
 };
 
 export default Login;
-//hiii

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
@@ -12,7 +12,10 @@ const navigation = [
     { name: 'FAQs', href: '/faqs' },
 ];
 
-export default function Header({ mobileMenuOpen, setMobileMenuOpen }) {
+export default function Header({ onLogout }) {
+    // Initialize state for mobile menu open/close
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
     return (
         <header className="absolute inset-x-0 top-0 z-50 shadow-sm">
             <nav className="flex items-center justify-between bg-white/90 backdrop-blur-md p-6 lg:px-8 rounded-b-lg shadow-md">
@@ -53,19 +56,23 @@ export default function Header({ mobileMenuOpen, setMobileMenuOpen }) {
 
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                     <Link
-                        to="/login"
+                        to="/moncompte"
                         className="flex items-center text-sm font-semibold text-gray-800 hover:text-indigo-600 transition"
                     >
-                        {/* Lock Icon as SVG */}
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17v-2m0 0v-4m0 0V7a4 4 0 118 0v6a4 4 0 01-8 0v6m0 0H8a4 4 0 01-4-4v-6a4 4 0 014-4h8a4 4 0 014 4v6a4 4 0 01-4 4h-4z" />
-                        </svg>
                         Mon compte
                     </Link>
+
+                    {/* Nouveau bouton "Déconnexion" */}
+                    <button
+                        onClick={onLogout}  // Call the onLogout function passed as prop
+                        className="flex items-center text-sm font-semibold text-gray-800 hover:text-indigo-600 ml-6 transition"
+                    >
+                        Déconnexion
+                    </button>
                 </div>
             </nav>
 
-            {/* Mobile Menu */}
+            {/* Menu Mobile */}
             <Dialog open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} className="lg:hidden">
                 <DialogPanel
                     className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm"
