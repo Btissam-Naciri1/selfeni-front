@@ -3,48 +3,46 @@ import Header from './header';
 import Footer from './footer';
 
 const faqs = [
-
     {
         id: 2,
-        question: "How do I use Selfeni?",
-        answer: "Selfeni is designed to be user-friendly. Simply create an account, fill in your details, and follow the on-screen prompts to manage your credit.",
+        question: "Comment utiliser Selfeni ?",
+        answer: "Selfeni est conçu pour être facile à utiliser. Créez simplement un compte, renseignez vos informations, et suivez les instructions à l'écran pour gérer votre crédit.",
     },
     {
         id: 3,
-        question: "Is my data secure?",
-        answer: "Absolutely! We prioritize your security and use advanced encryption to ensure your data is safe with us.",
+        question: "Mes données sont-elles sécurisées ?",
+        answer: "Absolument ! Nous accordons une grande importance à votre sécurité et utilisons un chiffrement avancé pour garantir que vos données sont en sécurité chez nous.",
     },
     {
         id: 4,
-        question: "Can I contact support?",
-        answer: "Yes, our support team is available 24/7. Use the 'Contact Us' section to reach out via email or chat.",
+        question: "Puis-je contacter le support ?",
+        answer: "Oui, notre équipe de support est disponible 24h/24 et 7j/7. Utilisez la section 'Contactez-nous' pour nous contacter par email ou chat.",
     },
     {
         id: 5,
-        question: "What is Selfeni?",
-        answer: "Selfeni is a smart and fast credit management app that analyzes your data to assess your eligibility and guides you transparently through your processes.",
+        question: "Qu'est-ce que Selfeni ?",
+        answer: "Selfeni est une application intelligente et rapide de gestion de crédit qui analyse vos données pour évaluer votre éligibilité et vous guide de manière transparente tout au long de vos démarches.",
     },
     {
         id: 6,
-        question: "How does Selfeni evaluate my credit eligibility?",
-        answer: "Selfeni uses advanced algorithms to analyze your financial data and provide a detailed assessment of your credit eligibility in a matter of minutes.",
+        question: "Comment Selfeni évalue-t-il mon éligibilité au crédit ?",
+        answer: "Selfeni utilise des algorithmes avancés pour analyser vos données financières et fournir une évaluation détaillée de votre éligibilité au crédit en quelques minutes.",
     },
     {
         id: 7,
-        question: "Is Selfeni secure?",
-        answer: "Yes! Selfeni uses cutting-edge encryption and security measures to ensure that your personal and financial data is fully protected.",
+        question: "Selfeni est-il sécurisé ?",
+        answer: "Oui ! Selfeni utilise des technologies de chiffrement et des mesures de sécurité de pointe pour garantir que vos données personnelles et financières sont entièrement protégées.",
     },
     {
         id: 8,
-        question: "Can I access Selfeni from anywhere?",
-        answer: "Yes, Selfeni is available 24/7 on any device with an internet connection. You can use it from the comfort of your home or on the go.",
+        question: "Puis-je accéder à Selfeni depuis n'importe où ?",
+        answer: "Oui, Selfeni est disponible 24h/24 et 7j/7 sur tout appareil connecté à Internet. Vous pouvez l'utiliser confortablement chez vous ou en déplacement.",
     },
     {
         id: 9,
-        question: "How do I get started with Selfeni?",
-        answer: "Getting started with Selfeni is simple: Download the app or visit our website, create your account, enter your details, and let Selfeni handle the rest.",
+        question: "Comment commencer avec Selfeni ?",
+        answer: "Commencer avec Selfeni est simple : téléchargez l'application ou visitez notre site Web, créez votre compte, renseignez vos informations, et laissez Selfeni s'occuper du reste.",
     },
-
 ];
 
 export default function FAQPage() {
@@ -75,15 +73,14 @@ export default function FAQPage() {
 
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                        Frequently Asked Questions
+                        Questions fréquentes
                     </h2>
                     <p className="mt-4 text-lg leading-7 text-gray-600">
-                        Have a different question and can’t find the answer you’re looking for? Reach out to our support
-                        team by{' '}
+                        Vous avez une question différente et ne trouvez pas la réponse que vous cherchez ? Contactez notre équipe d'assistance en{' '}
                         <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                            sending us an email
+                            nous envoyant un email
                         </a>{' '}
-                        and we’ll get back to you as soon as we can.
+                        et nous vous répondrons dans les plus brefs délais.
                     </p>
                 </div>
                 <div className="mt-16">

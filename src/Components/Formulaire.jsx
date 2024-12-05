@@ -3,18 +3,93 @@
 
 import React, { useState } from 'react';
 import Header from './header';
+import axios from 'axios';
+
 import Footer from './footer';
 
 export default function Formulaire() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [step, setStep] = useState(1); // Current step
-    const [amount, setAmount] = useState(10000);
-    const [duration, setDuration] = useState(24);
+    const [loan_amount, setAmount] = useState(10000);
+    const [loan_amount_term, setDuration] = useState(24);
     const [monthlyPayment, setMonthlyPayment] = useState(469.4);
 
-    const handleNextStep = () => {
-        if (step < 3) setStep(step + 1);
+    const handleNextStep = async () => {
+        if (step < 3) {
+            try {
+                // Get the access token from localStorage
+                const accessToken = localStorage.getItem("access_token");
+    
+                // Call the API with the access token
+                const response = await axios.post(
+                    "http://127.0.0.1:8000/api/credits/",
+                    {
+                        montant_demande: loan_amount,
+                        duree: loan_amount_term,
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    }
+                );
+    
+                console.log("Response from API:", response.data);
+    
+                // Proceed to the next step only if the API call is successful
+                setStep(step + 1);
+            } catch (error) {
+                // Check if the error is due to token expiration
+                if (error.response && error.response.status === 401) {
+                    console.error("Access token expired. Refreshing...");
+    
+                    try {
+                        // Refresh the token
+                        const refreshResponse = await axios.post(
+                            "http://127.0.0.1:8000/api/token/refresh/",
+                            {
+                                refresh: localStorage.getItem("refresh_token"),
+                            }
+                        );
+    
+                        // Update the access token in localStorage
+                        localStorage.setItem("access_token", refreshResponse.data.access);
+    
+                        // Retry the original request with the new token
+                        const retryResponse = await axios.post(
+                            "http://127.0.0.1:8000/api/credits/",
+                            {
+                                montant_demande: loan_amount,
+                                duree: loan_amount_term,
+                            },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${refreshResponse.data.access}`,
+                                },
+                            }
+                        );
+    
+                        console.log("Response from API after refreshing token:", retryResponse.data);
+    
+                        // Proceed to the next step
+                        setStep(step + 1);
+                    } catch (refreshError) {
+                        console.error("Error refreshing token:", refreshError);
+                        // Optionally, log out the user if refreshing fails
+                        alert("Session expired. Please log in again.");
+                        // Clear tokens and redirect to login page
+                        localStorage.removeItem("access_token");
+                        localStorage.removeItem("refresh_token");
+                        window.location.href = "/login";
+                    }
+                } else {
+                    console.error("Error calling API:", error);
+                    // Optionally, handle other API errors
+                }
+            }
+        }
     };
+    
 
     const handlePreviousStep = () => {
         if (step > 1) setStep(step - 1);
@@ -24,10 +99,10 @@ export default function Formulaire() {
         alert('Les informations saisies ont été validées avec succès.');
     };
 
-    const calculateMonthlyPayment = (amount, duration) => {
+    const calculateMonthlyPayment = (loan_amount, loan_amount_term) => {
         const rate = 0.05; // Example 5% annual interest rate
         const monthlyRate = rate / 12;
-        const payment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -duration));
+        const payment = (loan_amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -loan_amount_term));
         setMonthlyPayment(payment.toFixed(2));
     };
 
@@ -66,28 +141,28 @@ export default function Formulaire() {
                             <form>
                                 {/* Amount */}
                                 <div className="mb-6">
-                                    <label htmlFor="amount" className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label htmlFor="loan_amount" className="block text-sm font-medium text-gray-700 mb-2">
     Montant (en DH):
 </label>
 <div className="flex items-center gap-4">
     <input
         type="number"
-        value={amount}
+        value={loan_amount}
         readOnly
         className="w-24 text-center py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 font-bold text-indigo-600"
     />
     <input
         type="range"
-        id="amount"
-        name="amount"
+        id="loan_amount"
+        name="loan_amount"
         min="1000"
         max="500000"
         step="1000"
-        value={amount}
+        value={loan_amount}
         onChange={(e) => {
             const value = parseInt(e.target.value, 10);
             setAmount(value);
-            calculateMonthlyPayment(value, duration);
+            calculateMonthlyPayment(value, loan_amount_term);
         }}
         className="w-full h-2 bg-indigo-300 rounded-lg appearance-none cursor-pointer focus:outline-none"
     />
@@ -96,28 +171,28 @@ export default function Formulaire() {
 
 {/* Duration */}
 <div className="mb-6">
-    <label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-2">
+    <label htmlFor="loan_amount_term" className="block text-sm font-medium text-gray-700 mb-2">
         Durée (en mois):
     </label>
     <div className="flex items-center gap-4">
         <input
             type="number"
-            value={duration}
+            value={loan_amount_term}
             readOnly
             className="w-24 text-center py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 font-bold text-indigo-600"
         />
         <input
             type="range"
-            id="duration"
-            name="duration"
+            id="loan_amount_term"
+            name="loan_amount_term"
             min="6"
             max="60"
             step="1"
-            value={duration}
+            value={loan_amount_term}
             onChange={(e) => {
                 const value = parseInt(e.target.value, 10);
                 setDuration(value);
-                calculateMonthlyPayment(amount, value);
+                calculateMonthlyPayment(loan_amount, value);
             }}
             className="w-full h-2 bg-indigo-300 rounded-lg appearance-none cursor-pointer focus:outline-none"
         />

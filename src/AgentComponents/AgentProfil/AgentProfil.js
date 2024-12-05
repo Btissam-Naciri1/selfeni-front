@@ -1,35 +1,90 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../Navbar/Navbar';
-import Footer from '../footer/footer';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function AgentProfil() {
-  const navigate = useNavigate();
-  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+    const navigate = useNavigate();
+    const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
 
-  const handleBack = () => {
-    navigate('/Dashboard');
-  };
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [message, setMessage] = useState('');
+  
+    const handleBack = () => {
+      navigate('/Dashboard');
+    };
+  
+    const openModal = () => {
+      setShowChangePasswordModal(true);
+    };
+  
+    const closeModal = () => {
+      setShowChangePasswordModal(false);
+    };
+  
+    /*const handleSubmitNewPassword = (e) => {
+      e.preventDefault();
+      console.log('Mot de passe changé');
+      closeModal();
+    };*/
 
-  const openModal = () => {
-    setShowChangePasswordModal(true);
-  };
+    //function to show info 
+      const [profileData, setProfileData] = useState(null);
+      useEffect(() => {
+          // Replace 'your-token' with the actual JWT from your auth process
+          const token = localStorage.getItem('access_token'); 
+  
+          axios
+              .get('http://127.0.0.1:8000/api/profile/', {
+                  headers: {
+                      Authorization: `Bearer ${token}`,
+                  },
+              })
+              .then((response) => {
+                  setProfileData(response.data);
+              })
+              .catch((error) => {
+                  console.error('Error fetching profile data:', error);
+              });
+      }, []);
+  
+      if (!profileData) {
+          return <div>Loading...</div>;
+      }
 
-  const closeModal = () => {
-    setShowChangePasswordModal(false);
-  };
+      //change password
+      const handleChangePassword = (e) => {
+        if(e){
+        e.preventDefault();}
 
-  const handleSubmitNewPassword = (e) => {
-    e.preventDefault();
-    console.log('Mot de passe changé');
-    closeModal();
-  };
+        const token = localStorage.getItem('access_token'); // Retrieve JWT
 
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8 flex-1">
-        {/* Arrière-plan principal */}
+        axios
+            .post(
+                'http://127.0.0.1:8000/api/change-password/',
+                { old_password: oldPassword, new_password: newPassword },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((response) => {
+                setMessage(response.data.success || 'Password changed successfully');
+                setOldPassword('');
+                setNewPassword('');
+            })
+            .catch((error) => {
+                const errorMsg = error.response?.data?.error || 'An error occurred';
+                setMessage(errorMsg);
+            });
+    };
+
+    
+  
+    return (
+      <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
+        {/* Arrière-plan */}
         <div
           aria-hidden="true"
           className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
@@ -55,11 +110,11 @@ export default function AgentProfil() {
             <dl className="divide-y divide-gray-200">
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium text-gray-900">Nom</dt>
-                <dd className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">Margot Foster</dd>
+                <dd className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">{profileData.nom}</dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium text-gray-900">Prénom</dt>
-                <dd className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">Margot Foster</dd>
+                <dd className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">{profileData.prenom}</dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium text-gray-900">Fonction</dt>
@@ -67,7 +122,7 @@ export default function AgentProfil() {
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium text-gray-900">Adresse Email</dt>
-                <dd className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">margotfoster@example.com</dd>
+                <dd className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">{profileData.email}</dd>
               </div>
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium text-gray-900">Mot de passe</dt>
@@ -115,13 +170,16 @@ export default function AgentProfil() {
                 </div>
 
                 <h2 className="text-lg font-semibold text-gray-900">Changer le mot de passe</h2>
-                <form onSubmit={handleSubmitNewPassword} className="mt-4">
+                
+                <form onSubmit= {handleChangePassword} className="mt-4">
                   <div className="mb-4">
                     <label htmlFor="old-password" className="block text-sm font-medium text-gray-700">
                       Ancien mot de passe
                     </label>
                     <input
-                      type="password"
+                    type="password"
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
                       id="old-password"
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       required
@@ -132,7 +190,9 @@ export default function AgentProfil() {
                       Nouveau mot de passe
                     </label>
                     <input
-                      type="password"
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
                       id="new-password"
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       required
@@ -165,12 +225,17 @@ export default function AgentProfil() {
                     </button>
                   </div>
                 </form>
+                {/* Display the message */}
+            
               </div>
             </div>
           )}
+          {message && (
+                <div className={`mt-4 text-sm ${message.includes("success") ? "text-green-600" : "text-red-600"}`}>
+                    {message}
+                </div>
+            )}
         </div>
       </div>
-      <Footer />
-    </div>
-  );
-}
+    );
+  }
