@@ -4,6 +4,14 @@ import React, { useState } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
+import Logout from './logout';
+
+
+
+const handleLogout = () => {
+    console.log('User logged out');
+    // Add additional cleanup or state updates if necessary
+};
 
 const navigation = [
     { name: 'Home', href: '/' },
@@ -56,19 +64,14 @@ export default function Header({ onLogout }) {
 
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
                     <Link
-                        to="/moncompte"
+                        to="/login"
                         className="flex items-center text-sm font-semibold text-gray-800 hover:text-indigo-600 transition"
                     >
                         Mon compte
                     </Link>
 
                     {/* Nouveau bouton "Déconnexion" */}
-                    <button
-                        onClick={onLogout}  // Call the onLogout function passed as prop
-                        className="flex items-center text-sm font-semibold text-gray-800 hover:text-indigo-600 ml-6 transition"
-                    >
-                        Déconnexion
-                    </button>
+                    <Logout onLogout={handleLogout} />
                 </div>
             </nav>
 
