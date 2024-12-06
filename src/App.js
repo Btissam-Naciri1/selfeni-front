@@ -9,22 +9,22 @@ import Formulaire from './Components/Formulaire';
 import MonCompte from './Components/moncompte';
 import EditProfile from './Components/editprofile';
 import Logout from './Components/logout';
-import Header from './Components/header';  // Import Header
+//import Header from './Components/header';  // Import Header
 
 function App() {
     // Define the onLogout function
-    const onLogout = () => {
+   /* const onLogout = () => {
         // Remove authentication tokens from localStorage
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
 
         // Redirect to login page after logout
         window.location.href = '/login';  // You can also use navigate('/login') if using useNavigate()
-    };
+    };*/
 
     return (
         <Router>
-            <Header onLogout={onLogout} />  {/* Pass onLogout function to Header */}
+              {/* Pass onLogout function to Header */}
             <Routes>
                 <Route path="/" element={<SelfeniHome />} />
                 <Route path="/about" element={<About />} />
