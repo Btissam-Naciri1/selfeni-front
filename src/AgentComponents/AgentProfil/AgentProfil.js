@@ -97,14 +97,14 @@ export default function AgentProfil() {
             className="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]"
           />
         </div>
-  
+
         <div className="p-6">
           {/* Header */}
           <div className="px-4 sm:px-0">
             <h3 className="text-lg font-semibold text-gray-900">Informations de l'agent</h3>
             <p className="mt-1 max-w-2xl text-sm text-gray-500">Détails personnels.</p>
           </div>
-  
+
           {/* Content */}
           <div className="mt-6 border-t border-gray-200">
             <dl className="divide-y divide-gray-200">
@@ -112,22 +112,18 @@ export default function AgentProfil() {
                 <dt className="text-sm font-medium text-gray-900">Nom</dt>
                 <dd className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">{profileData.nom}</dd>
               </div>
-  
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium text-gray-900">Prénom</dt>
                 <dd className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">{profileData.prenom}</dd>
               </div>
-  
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium text-gray-900">Fonction</dt>
                 <dd className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">Agent</dd>
               </div>
-  
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium text-gray-900">Adresse Email</dt>
                 <dd className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0">{profileData.email}</dd>
               </div>
-  
               <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-medium text-gray-900">Mot de passe</dt>
                 <dd className="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0 flex items-center gap-4">
@@ -143,8 +139,8 @@ export default function AgentProfil() {
               </div>
             </dl>
           </div>
-  
-          {/* Buttons */}
+
+          {/* Bouton retour */}
           <div className="mt-10 flex justify-between">
             <button
               type="button"
@@ -154,33 +150,30 @@ export default function AgentProfil() {
               Retour
             </button>
           </div>
-  
+
           {/* Modal */}
           {showChangePasswordModal && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-              <div className="bg-white rounded-lg shadow-lg w-[600px] p-8 relative isolate">
-                {/* Arrière-plan */}
+              <div className="relative bg-white rounded-lg shadow-lg w-[600px] p-8">
+                {/* Arrière-plan du modal */}
                 <div
                   aria-hidden="true"
-                  className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
+                  className="absolute inset-x-0 top-[-8rem] -z-10 transform-gpu overflow-hidden blur-3xl"
                 >
                   <div
                     style={{
                       clipPath:
                         'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
                     }}
-                    className="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]"
+                    className="relative left-1/2 -z-10 aspect-[1155/678] w-[30rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
                   />
                 </div>
-  
+
                 <h2 className="text-lg font-semibold text-gray-900">Changer le mot de passe</h2>
                 
                 <form onSubmit= {handleChangePassword} className="mt-4">
                   <div className="mb-4">
-                    <label
-                      htmlFor="old-password"
-                      className="block text-sm font-medium text-gray-700"
-                    >
+                    <label htmlFor="old-password" className="block text-sm font-medium text-gray-700">
                       Ancien mot de passe
                     </label>
                     <input
@@ -193,10 +186,7 @@ export default function AgentProfil() {
                     />
                   </div>
                   <div className="mb-4">
-                    <label
-                      htmlFor="new-password"
-                      className="block text-sm font-medium text-gray-700"
-                    >
+                    <label htmlFor="new-password" className="block text-sm font-medium text-gray-700">
                       Nouveau mot de passe
                     </label>
                     <input
@@ -209,10 +199,7 @@ export default function AgentProfil() {
                     />
                   </div>
                   <div className="mb-4">
-                    <label
-                      htmlFor="confirm-password"
-                      className="block text-sm font-medium text-gray-700"
-                    >
+                    <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">
                       Confirmer le mot de passe
                     </label>
                     <input

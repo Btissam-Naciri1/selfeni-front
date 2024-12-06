@@ -23,11 +23,7 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        if (
-            error.response &&
-            error.response.status === 401 &&
-            !originalRequest._retry
-        ) {
+        if (error.response && error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
 
             const refreshToken = localStorage.getItem('refresh_token');
@@ -45,6 +41,12 @@ api.interceptors.response.use(
                     window.location.href = '/login';
                 }
             }
+        }
+
+        // Handle other errors (e.g., 500, 404, etc.)
+        if (error.response) {
+            // Add logic here to handle specific error responses
+            console.error('API Error:', error.response);
         }
 
         return Promise.reject(error);
