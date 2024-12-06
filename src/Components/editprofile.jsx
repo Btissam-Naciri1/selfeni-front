@@ -12,10 +12,14 @@ const EditProfile = () => {
         confirmPassword: '',
     });
 
-    const handlePasswordChange = (e) => {
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [message, setMessage] = useState('');
+
+    /*const handlePasswordChange = (e) => {
         const { name, value } = e.target;
         setPasswordData({ ...passwordData, [name]: value });
-    };
+    };*/
 
 
     const handlePasswordSubmit = (e) => {
@@ -24,6 +28,37 @@ const EditProfile = () => {
         console.log('Password Change:', passwordData);
         setIsModalOpen(false); // Close the modal after submitting
     };
+
+
+     //change password
+     const handleChangePassword = (e) => {
+        if(e){
+        e.preventDefault();}
+
+        const token = localStorage.getItem('access_token'); // Retrieve JWT
+
+        axios
+            .post(
+                'http://127.0.0.1:8000/api/change-password/',
+                { old_password: oldPassword, new_password: newPassword },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((response) => {
+                setMessage(response.data.success || 'Password changed successfully');
+                setOldPassword('');
+                setNewPassword('');
+            })
+            .catch((error) => {
+                const errorMsg = error.response?.data?.error || 'An error occurred';
+                setMessage(errorMsg);
+            });
+    };
+
+    // this here to update
 
     const [userData, setUserData] = useState({
         nom: "",
@@ -192,15 +227,15 @@ const EditProfile = () => {
                     <div className="bg-white p-8 rounded-lg shadow-lg w-96">
                         <h3 className="text-2xl font-semibold text-indigo-600 mb-6">Changer le mot de passe</h3>
 
-                        <form onSubmit={handlePasswordSubmit} className="space-y-4">
+                        <form onSubmit= {handleChangePassword} className="space-y-4">
                             <div>
                                 <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700">Mot de passe actuel</label>
                                 <input
                                     id="currentPassword"
                                     name="currentPassword"
                                     type="password"
-                                    value={passwordData.currentPassword}
-                                    onChange={handlePasswordChange}
+                                    value={oldPassword}
+                                    onChange={(e) => setOldPassword(e.target.value)}
                                     className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 />
                             </div>
@@ -211,8 +246,8 @@ const EditProfile = () => {
                                     id="newPassword"
                                     name="newPassword"
                                     type="password"
-                                    value={passwordData.newPassword}
-                                    onChange={handlePasswordChange}
+                                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
                                     className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 />
                             </div>
@@ -223,8 +258,6 @@ const EditProfile = () => {
                                     id="confirmPassword"
                                     name="confirmPassword"
                                     type="password"
-                                    value={passwordData.confirmPassword}
-                                    onChange={handlePasswordChange}
                                     className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 />
                             </div>
@@ -245,6 +278,11 @@ const EditProfile = () => {
                                 </button>
                             </div>
                         </form>
+                        {message && (
+                <div className={`mt-4 text-sm ${message.includes("success") ? "text-green-600" : "text-red-600"}`}>
+                    {message}
+                </div>
+            )}
                     </div>
                 </div>
             )}

@@ -52,7 +52,7 @@ const Login = () => {
                 // Sauvegarde des tokens dans le local storage
                 localStorage.setItem('access_token', response.data.access);
                 localStorage.setItem('refresh_token', response.data.refresh);
-                navigate('/moncompte');  // Redirige vers la page du compte utilisateur après la connexion
+                navigate('/formulaire');  // Redirige vers la page du compte utilisateur après la connexion
             }
         } catch (error) {
             if (error.response && error.response.data) {

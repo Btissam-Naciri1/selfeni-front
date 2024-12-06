@@ -3,8 +3,11 @@
 import React, { useState } from 'react';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import Logout from './logout';
+
+
+
 
 
 
@@ -23,6 +26,25 @@ const navigation = [
 export default function Header({ onLogout }) {
     // Initialize state for mobile menu open/close
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const navigate = useNavigate();
+
+   // Check if user is logged in by verifying access token in localStorage
+    const isUserLoggedIn = () => {
+    const accessToken = localStorage.getItem('access_token');
+    return accessToken ? true : false;  // Check if access token exists
+};
+
+// Handler for the "Commencer maintenant" button click
+const handleStartNowClick = () => {
+    if (!isUserLoggedIn()) {
+        // Redirect to login page if the user is not logged in
+        navigate('/login');
+    } else {
+        // Navigate to the form page if the user is logged in
+        navigate('/moncompte');
+    }
+};
 
     return (
         <header className="absolute inset-x-0 top-0 z-50 shadow-sm">
@@ -63,12 +85,13 @@ export default function Header({ onLogout }) {
                 </div>
 
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <Link
-                        to="/login"
-                        className="flex items-center text-sm font-semibold text-gray-800 hover:text-indigo-600 transition"
-                    >
-                        Mon compte
-                    </Link>
+                <button
+                    onClick={handleStartNowClick}
+                    className="flex items-center text-sm font-semibold text-gray-800 hover:text-indigo-600 transition"
+                >
+                    Mon compte
+                </button>
+                    
 
                     {/* Nouveau bouton "Déconnexion" */}
                     <Logout onLogout={handleLogout} />
