@@ -34,7 +34,7 @@ const ScorerClient = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar/>
       {/* Background avec un design moderne */}
       <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
         <h1 className="text-center tracking-tight text-gray-700 font-bold text-3xl sm:text-4xl mb-8">
@@ -251,7 +251,7 @@ const ScorerClient = () => {
               onClick={handleConfirm}
               className="w-full sm:w-auto bg-indigo-500 text-white font-semibold px-6 py-2.5 rounded-md shadow-sm hover:bg-indigo-600"
             >
-              Confirmer
+              Scorer
             </button>
           </div>
         </form>

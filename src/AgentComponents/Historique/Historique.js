@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
-const ClientsList = () => {
-  const navigate = useNavigate();
+import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer'; 
+const Historique = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Updated to show 5 items per page
   
@@ -16,7 +15,7 @@ const ClientsList = () => {
     const fetchCredits = async () => {
       try {
         const token = localStorage.getItem('access_token');
-        const response = await axios.get('http://127.0.0.1:8000/api/credits/encours/admins/', {
+        const response = await axios.get('http://127.0.0.1:8000/api/admin/credits/', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCredits(response.data); // Set data only once
@@ -50,13 +49,12 @@ const ClientsList = () => {
     currentPage * itemsPerPage
   );
 
-  const handleDetails = (clientId) => {
-    navigate(`/ScorerClient/${clientId}`);
-    console.log("Afficher les détails du client :", clientId);
-};
+
 
 
   return (
+    <div>
+        <Navbar/>
     <div className="p-8 min-h-screen">
       <div className="bg-white shadow rounded-lg p-6">
         <h3 className="text-lg text-gray-700 mb-4">Liste des Crédits</h3>
@@ -82,14 +80,7 @@ const ClientsList = () => {
                     {new Date(credit.date_demande).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{credit.statut}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm flex gap-2">
-                    <button
-                      onClick={() => handleDetails(credit.client_id)}
-                      className="px-3 py-1 text-sm border border-indigo-500 text-indigo-500 rounded-md hover:bg-indigo-50"
-                    >
-                      Détails
-                    </button>
-                  </td>
+
                 </tr>
               ))}
             </tbody>
@@ -141,7 +132,9 @@ const ClientsList = () => {
         </div>
       </div>
     </div>
+    <Footer></Footer>
+    </div>
   );
 };
 
-export default ClientsList;
+export default Historique;

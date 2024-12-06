@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Dashboard.css";
 import Clientslist from "../ListeClient/Clientslist";
-import Navbar from "../Navbar/Navbar";
+import Header from '../Navbar/Navbar';
 import Footer from '../footer/footer';
 
 
@@ -17,9 +17,12 @@ const Dashboard = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="dashboard-wrapper">
+    <div className="dashboard-wrapper ">
       {/* Barre de navigation */}
-      <Navbar />
+      <Header
+                mobileMenuOpen={mobileMenuOpen}
+                setMobileMenuOpen={setMobileMenuOpen}
+            />
 
       {/* Arrière-plan stylisé */}
       <div
@@ -37,7 +40,7 @@ const Dashboard = () => {
 
       {/* Section des cartes */}
       <div className="dashboard-cards grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-12 px-6 py-12">
-        {cardsData.map((card, index) => (
+        {/* {cardsData.map((card, index) => (
           <div
             key={index}
             className="card bg-white shadow-lg rounded-lg p-6 flex flex-col justify-center items-center hover:scale-105 transition-transform duration-300 ease-in-out"
@@ -45,7 +48,7 @@ const Dashboard = () => {
             <h3 className="text-3xl font-semibold text-indigo-600">{card.value}</h3>
             <p className="mt-2 text-lg text-gray-500">{card.label}</p>
           </div>
-        ))}
+        ))} */}
       </div>
 
       {/* Liste des clients */}

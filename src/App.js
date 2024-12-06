@@ -13,6 +13,7 @@ import FaqsPage from './AgentComponents/FAQs/FaqsPage';
 import MonCompte from './Components/moncompte';
 import EditProfile from './Components/editprofile';
 import Logout from './Components/logout';
+import Historique from './AgentComponents/Historique/Historique';
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/moncompte" element={<MonCompte />} />
                 <Route path="/EditProfile" element={<EditProfile />} />
                 <Route path="/logout" element={<Logout />} />
+                <Route path='/historique' element={<Historique></Historique>} ></Route>
             </Routes>
         </Router>
     );

@@ -48,12 +48,24 @@ const Login = () => {
                     email,
                     password,
                 });
-
+            
                 // Sauvegarde des tokens dans le local storage
                 localStorage.setItem('access_token', response.data.access);
                 localStorage.setItem('refresh_token', response.data.refresh);
-                navigate('/formulaire');  // Redirige vers la page du compte utilisateur après la connexion
+            
+                // Extract the user role from the response
+                const userRole = response.data.user.role;
+            
+                // Navigate based on the user's role
+                if (userRole === 'client') {
+                    navigate('/formulaire');  // Redirect to client form page
+                } else if (userRole === 'admin') {
+                    navigate('/Dashboard');  // Redirect to admin dashboard
+                } else {
+                    console.error('Unknown user role:', userRole);
+                }
             }
+            
         } catch (error) {
             if (error.response && error.response.data) {
                 setError(error.response.data.detail || 'Échec de l\'action. Essayez à nouveau.');

@@ -1,9 +1,10 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import Logout from '../../Components/logout'
 
 const navigation = [
   { name: 'Dashboard', href: '/Dashboard', current: false },
-  { name: 'Scoring Client', href: '/ScorerClient', current: false },
+  { name: 'Historique', href: '/historique', current: false },
   { name: 'FAQs', href: '/FaqsPage', current: false },
 ]
 
@@ -12,8 +13,12 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+  const handleLogout = () => {
+    console.log('User logged out');
+    // Add additional cleanup or state updates if necessary
+};
   return (
-    <Disclosure as="nav" className="bg-gray-800 fixed w-full z-50">
+    <Disclosure as="nav" className="bg-gray-800 fixed w-full z-50 top-0">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-20 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -88,12 +93,8 @@ export default function Example() {
                 </MenuItem>
                 
                 <MenuItem>
-                  <a
-                    href="/Login"
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                  >
-                    Logout
-                  </a>
+                <Logout onLogout={handleLogout} />
+
                 </MenuItem>
               </MenuItems>
             </Menu>

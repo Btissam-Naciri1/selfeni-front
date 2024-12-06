@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import Navbar from '../Navbar/Navbar';
+import Footer from '../footer/footer'; 
 export default function AgentProfil() {
     const navigate = useNavigate();
     const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
@@ -83,6 +84,8 @@ export default function AgentProfil() {
     
   
     return (
+      <div>
+        <Navbar></Navbar>
       <div className="relative isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
         {/* Arrière-plan */}
         <div
@@ -236,6 +239,8 @@ export default function AgentProfil() {
                 </div>
             )}
         </div>
+      </div>
+      <Footer/>
       </div>
     );
   }
