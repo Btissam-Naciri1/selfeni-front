@@ -9,21 +9,22 @@ import axios from "axios";
 export default function Formulaire() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [step, setStep] = useState(1);
-  const [loan_amount, setAmount] = useState(10000);
-  const [loan_amount_term, setDuration] = useState(24);
+  const [loan_amount, setAmount] = useState();
+  const [loan_amount_term, setDuration] = useState();
   const [monthlyPayment, setMonthlyPayment] = useState(469.4);
+
   const [formData, setFormData] = useState({
-    gender: "Male", // Default value
-    married: "Yes", // Default value
-    dependents: "1", // Default value
-    education: "Graduate", // Default value
-    selfEmployed: "No", // Default value
-    income: 5000, // Default value
-    coapplicantIncome: 2000, // Default value
-    loanAmount: 150, // Default value
-    loanAmountTerm: 360, // Default value
-    creditHistory: 1.0, // Default value
-    propertyArea: "Urban", // Default value
+    gender: "Male",
+    married: "Yes",
+    dependents: "1",
+    education: "Graduate",
+    selfEmployed: "No",
+    income: 5000,
+    coapplicantIncome: 2000,
+    loanAmount: loan_amount,
+    loanAmountTerm: loan_amount_term,
+    creditHistory: 1.0,
+    propertyArea: "Urban",
   });
   
   
@@ -36,17 +37,17 @@ export default function Formulaire() {
   };
   const validateFormData = () => {
     const { gender, married, dependents, education, selfEmployed, income, coapplicantIncome, loanAmount, loanAmountTerm, creditHistory, propertyArea } = formData;
-  
-    if (!gender || !married || !dependents || !education || !selfEmployed || !propertyArea) {
+
+    if (!gender || !married || !dependents || !education || !selfEmployed || !propertyArea || !income ||!loanAmount || !loanAmountTerm) {
       alert("Please fill all the required fields.");
       return false;
     }
-  
+
     if (loanAmount <= 0 || loanAmountTerm <= 0 || creditHistory < 0) {
       alert("Loan amount, term, and credit history must be valid.");
       return false;
     }
-  
+
     return true;
   };
   
@@ -74,13 +75,17 @@ export default function Formulaire() {
       window.location.href = "/login";
       return null;
     }
-  };  
-  //const handleNextStep = () => setStep(step + 1);
+  };
+
   const handleNextStep = async () => {
     if (step < 3) {
       try {
         const accessToken = localStorage.getItem("access_token");
-  
+        if (!accessToken) {
+          alert("You need to be logged in.");
+          return;
+        }
+
         const response = await axios.post(
           "http://127.0.0.1:8000/api/credits/",
           {
@@ -93,7 +98,7 @@ export default function Formulaire() {
             },
           }
         );
-  
+
         setStep(step + 1);
       } catch (error) {
         if (error.response?.status === 401) {
@@ -124,10 +129,10 @@ export default function Formulaire() {
         Credit_History: parseFloat(formData.creditHistory || 0),
         Property_Area: formData.propertyArea,
       };
-  
+
       console.log("Payload:", payload);
       const response = await axios.post(
-        "http://127.0.0.1:8000/ml_integration/predict-loan-status/",
+        "http://127.0.0.1:8000/ml_integration/predict-loan-status/add",
         payload
       );
       console.log("Success:", response.data);
@@ -141,33 +146,35 @@ export default function Formulaire() {
     <>
       <Header mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
       <main className="bg-white py-16 px-4 sm:py-24 sm:px-6 lg:px-8 lg:py-24">
-      {step === 1 && (
-  <Step1
-  loan_amount={loan_amount}
-  loan_amount_term={loan_amount_term}
-  monthlyPayment={monthlyPayment}
-  calculateMonthlyPayment={calculateMonthlyPayment}
-  handleNextStep={handleNextStep}
-/>
-)}
-{step === 2 && (
-  <Step2
-    handlePreviousStep={handlePreviousStep}
-    handleNextStep={handleNextStep}
-    formData={formData}
-    setFormData={setFormData}
-  />
-)}
-{step === 3 && (
-  <Step3
-    handlePreviousStep={handlePreviousStep}
-    handleValidation={handleValidation}
-    formData={formData}
-    setFormData={setFormData}
-  />
-)}
-</main>
-      <Footer mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen}/>
+        {step === 1 && (
+          <Step1
+            loan_amount={loan_amount}
+            loan_amount_term={loan_amount_term}
+            monthlyPayment={monthlyPayment}
+            calculateMonthlyPayment={calculateMonthlyPayment}
+            handleNextStep={handleNextStep}
+            setAmount={setAmount}
+            setDuration={setDuration}
+          />
+        )}
+        {step === 2 && (
+          <Step2
+            handlePreviousStep={handlePreviousStep}
+            handleNextStep={handleNextStep}
+            formData={formData}
+            setFormData={setFormData}
+          />
+        )}
+        {step === 3 && (
+          <Step3
+            handlePreviousStep={handlePreviousStep}
+            handleValidation={handleValidation}
+            formData={formData}
+            setFormData={setFormData}
+          />
+        )}
+      </main>
+      <Footer mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
     </>
   );
 }

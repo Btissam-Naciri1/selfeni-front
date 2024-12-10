@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ClientsList = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const ClientsList = () => {
   const [credits, setCredits] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  let { loan_id } = useParams();
   useEffect(() => {
     const fetchCredits = async () => {
       try {
@@ -29,7 +29,7 @@ const ClientsList = () => {
     };
 
     fetchCredits();
-  }, []); // Avoid duplicate calls
+  }, [loan_id]); // Avoid duplicate calls
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
@@ -50,9 +50,9 @@ const ClientsList = () => {
     currentPage * itemsPerPage
   );
 
-  const handleDetails = (clientId) => {
-    navigate(`/ScorerClient/${clientId}`);
-    console.log("Afficher les détails du client :", clientId);
+  const handleDetails = (loan_id) => {
+    navigate(`/ClientDetails/${loan_id}`);
+    console.log("Afficher les détails du client :", loan_id);
 };
 
 
@@ -77,14 +77,14 @@ const ClientsList = () => {
               {paginatedData.map((credit, index) => (
                 <tr key={index} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{credit.client}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{credit.montant_demande}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{credit.loan_amount}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {new Date(credit.date_demande).toLocaleDateString()}
+                    {new Date(credit.created_at).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{credit.statut}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm flex gap-2">
                     <button
-                      onClick={() => handleDetails(credit.client_id)}
+                      onClick={() => handleDetails(credit.id)}
                       className="px-3 py-1 text-sm border border-indigo-500 text-indigo-500 rounded-md hover:bg-indigo-50"
                     >
                       Détails

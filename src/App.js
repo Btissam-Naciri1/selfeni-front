@@ -14,6 +14,7 @@ import MonCompte from './Components/moncompte';
 import EditProfile from './Components/editprofile';
 import Logout from './Components/logout';
 import Historique from './AgentComponents/Historique/Historique';
+import ClientDetails from './AgentComponents/ClientDetails';
 
 
 function App() {
@@ -39,8 +40,8 @@ function App() {
                 <Route path="/formulaire" element={<Formulaire />} />
                 <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/AgentProfil" element={<AgentProfil />} />
-                <Route path="/ScorerClient" element={<ScorerClient />} />
-                <Route path="/ScorerClient/:code" element={<ScorerClient />} />
+                <Route path="/ScorerClient" element={<ClientDetails />} />
+                <Route path="/ClientDetails/:loan_id" element={<ClientDetails />} />
                 <Route path="/FaqsPage" element={<FaqsPage />} />
                 <Route path="/moncompte" element={<MonCompte />} />
                 <Route path="/EditProfile" element={<EditProfile />} />

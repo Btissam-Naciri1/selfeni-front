@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Step3({ handlePreviousStep, handleValidation }) {
+export default function Step3({ handlePreviousStep, handleValidation, formData, setFormData }) {
   const navigate = useNavigate();
-
+/*
   // State to hold form inputs
   const [formData, setFormData] = useState({
     gender: "Male", // Default value
@@ -19,7 +19,7 @@ export default function Step3({ handlePreviousStep, handleValidation }) {
     propertyArea: "Urban", // Default value
   });
   
-
+*/
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,10 +34,6 @@ export default function Step3({ handlePreviousStep, handleValidation }) {
     e.preventDefault();
     handleValidation(formData); // Pass the formData to the validation function
     navigate("/moncompte");
-  };
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
   
 
