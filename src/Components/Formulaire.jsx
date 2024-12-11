@@ -3,9 +3,10 @@
 
 import React, { useState } from 'react';
 import Header from './header';
-import axios from 'axios';
 
 import Footer from './footer';
+import PersonalDetailsForm from './PersonalDetailsForm';
+import AdditionalInfoForm from "./AdditionalInfoForm";
 
 export default function Formulaire() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -14,79 +15,9 @@ export default function Formulaire() {
     const [loan_amount_term, setDuration] = useState(24);
     const [monthlyPayment, setMonthlyPayment] = useState(469.4);
 
-    const handleNextStep = async () => {
+    const handleNextStep = () => {
         if (step < 3) {
-            try {
-                // Get the access token from localStorage
-                const accessToken = localStorage.getItem("access_token");
-    
-                // Call the API with the access token
-                const response = await axios.post(
-                    "http://127.0.0.1:8000/api/credits/",
-                    {
-                        montant_demande: loan_amount,
-                        duree: loan_amount_term,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`,
-                        },
-                    }
-                );
-    
-                console.log("Response from API:", response.data);
-    
-                // Proceed to the next step only if the API call is successful
-                setStep(step + 1);
-            } catch (error) {
-                // Check if the error is due to token expiration
-                if (error.response && error.response.status === 401) {
-                    console.error("Access token expired. Refreshing...");
-    
-                    try {
-                        // Refresh the token
-                        const refreshResponse = await axios.post(
-                            "http://127.0.0.1:8000/api/token/refresh/",
-                            {
-                                refresh: localStorage.getItem("refresh_token"),
-                            }
-                        );
-    
-                        // Update the access token in localStorage
-                        localStorage.setItem("access_token", refreshResponse.data.access);
-    
-                        // Retry the original request with the new token
-                        const retryResponse = await axios.post(
-                            "http://127.0.0.1:8000/api/credits/",
-                            {
-                                montant_demande: loan_amount,
-                                duree: loan_amount_term,
-                            },
-                            {
-                                headers: {
-                                    Authorization: `Bearer ${refreshResponse.data.access}`,
-                                },
-                            }
-                        );
-    
-                        console.log("Response from API after refreshing token:", retryResponse.data);
-    
-                        // Proceed to the next step
-                        setStep(step + 1);
-                    } catch (refreshError) {
-                        console.error("Error refreshing token:", refreshError);
-                        // Optionally, log out the user if refreshing fails
-                        alert("Session expired. Please log in again.");
-                        // Clear tokens and redirect to login page
-                        localStorage.removeItem("access_token");
-                        localStorage.removeItem("refresh_token");
-                        window.location.href = "/login";
-                    }
-                } else {
-                    console.error("Error calling API:", error);
-                    // Optionally, handle other API errors
-                }
-            }
+            setStep(step + 1); // Increment the step directly
         }
     };
     
@@ -225,176 +156,19 @@ export default function Formulaire() {
 </form>
 </>
 )}
-
 {step === 2 && (
-    <>
-        <h2 className="text-2xl font-extrabold text-gray-800 mb-8 text-center">
-            Mes coordonnées
-        </h2>
-        <form>
-            <div className="mb-6">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Adresse e-mail
-                </label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-purple-500 focus:border-purple-500"
-                    placeholder="example@example.com"
-                />
-            </div>
-            <div className="mb-6">
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                    Numéro de téléphone
-                </label>
-                <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-purple-500 focus:border-purple-500"
-                    placeholder="06 12 34 56 78"
-                />
-            </div>
+          <PersonalDetailsForm
+            handlePreviousStep={handlePreviousStep}
+            handleNextStep={handleNextStep}
+          />
+        )}
+        {step === 3 && (
+          <AdditionalInfoForm
+            handlePreviousStep={handlePreviousStep}
+            handleValidation={handleValidation}
+          />
+        )}
 
-            {/* Buttons */}
-            <div className="flex justify-between">
-                <button
-                    type="button"
-                    onClick={handlePreviousStep}
-                    className="bg-gray-300 text-gray-700 py-3 px-6 rounded-md hover:bg-gray-400"
-                >
-                    Retour
-                </button>
-                <button
-                    type="button"
-                    onClick={handleNextStep}
-                    className="bg-indigo-600 text-white py-3 px-6 rounded-md hover:bg-indigo-700"
-                >
-                    Continuer
-                </button>
-            </div>
-        </form>
-    </>
-)}
-
-{step === 3 && (
-    <>
-        <h2 className="text-2xl font-extrabold text-gray-800 mb-8 text-center">
-            Mes infos personnelles
-        </h2>
-        <form>
-            <div className="mb-6">
-                <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
-                    Genre
-                </label>
-                <select
-                    id="gender"
-                    name="gender"
-                    className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-purple-500 focus:border-purple-500"
-                >
-                    <option value="F">Femme</option>
-                    <option value="H">Homme</option>
-                </select>
-            </div>
-            <div className="mb-6">
-                <label htmlFor="married" className="block text-sm font-medium text-gray-700">
-                    Marié
-                </label>
-                <select
-                    id="married"
-                    name="married"
-                    className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-purple-500 focus:border-purple-500"
-                >
-                    <option value="Y">Oui</option>
-                    <option value="N">Non</option>
-                </select>
-            </div>
-            <div className="mb-6">
-                <label htmlFor="dependents" className="block text-sm font-medium text-gray-700">
-                    Dépendants
-                </label>
-                <select
-                    id="number"
-                    name="dependents"
-                    className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-purple-500 focus:border-purple-500"
-                >
-                    <option value="Y">0</option>
-                    <option value="N">1</option>
-                    <option value="Y">2</option>
-                    <option value="N">3+</option>
-                </select>
-            </div>
-
-            <div className="mb-6">
-                <label htmlFor="education" className="block text-sm font-medium text-gray-700">
-                    Éducation
-                </label>
-                <select
-                    id="education"
-                    name="education"
-                    className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-purple-500 focus:border-purple-500"
-                >
-                    <option>Diplômé</option>
-                    <option>Non diplômé</option>
-                </select>
-            </div>
-            <div className="mb-6">
-                <label htmlFor="selfEmployed" className="block text-sm font-medium text-gray-700">
-                    Travailleur Indépendant
-                </label>
-                <select
-                    id="selfEmployed"
-                    name="selfEmployed"
-                    className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-purple-500 focus:border-purple-500"
-                >
-                    <option value="Y">Oui</option>
-                    <option value="N">Non</option>
-                </select>
-            </div>
-            <div className="mb-6">
-                <label htmlFor="income" className="block text-sm font-medium text-gray-700">
-                    Revenu du Demandeur
-                </label>
-                <input
-                    type="number"
-                    id="income"
-                    name="income"
-                    className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-purple-500 focus:border-purple-500"
-                    placeholder="0"
-                />
-            </div>
-            <div className="mb-6">
-                <label htmlFor="coapplicantIncome" className="block text-sm font-medium text-gray-700">
-                    Revenu du Coemprunteur
-                </label>
-                <input
-                    type="number"
-                    id="coapplicantIncome"
-                    name="coapplicantIncome"
-                    className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:ring-purple-500 focus:border-purple-500"
-                    placeholder="0"
-                />
-            </div>
-            <div className="mt-6 flex justify-between">
-                <button
-                    type="button"
-                    onClick={handlePreviousStep}
-                    className="bg-gray-300 text-gray-700 py-3 px-6 rounded-md hover:bg-gray-400"
-                >
-                    Retour
-                </button>
-                <button
-                    type="button"
-                    onClick={handleValidation}
-                    className="bg-indigo-600 text-white py-3 px-6 rounded-md hover:bg-indigo-700"
-                >
-                    Valider
-                </button>
-            </div>
-        </form>
-    </>
-)}
                 </div>
             </div>
 

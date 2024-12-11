@@ -50,9 +50,9 @@ const ClientsList = () => {
     currentPage * itemsPerPage
   );
 
-  const handleDetails = (clientId) => {
-    navigate(`/ScorerClient/${clientId}`);
-    console.log("Afficher les détails du client :", clientId);
+  const handleDetails = (loan_prediction) => {
+    navigate(`/ScorerClient/${loan_prediction}`);
+    console.log("Afficher les détails du client :", loan_prediction);
 };
 
 
@@ -84,7 +84,7 @@ const ClientsList = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{credit.statut}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm flex gap-2">
                     <button
-                      onClick={() => handleDetails(credit.client_id)}
+                      onClick={() => handleDetails(credit.loan_prediction)}
                       className="px-3 py-1 text-sm border border-indigo-500 text-indigo-500 rounded-md hover:bg-indigo-50"
                     >
                       Détails

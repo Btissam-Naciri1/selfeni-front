@@ -1,36 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../footer/footer'; // Assurez-vous que le chemin est correct
 
-const ScorerClient = () => {
+
+const ScorerClient = ({ match }) => {
   const navigate = useNavigate();
-
-  // Données statiques pour tester avec nouveaux champs
-  const [client, setClient] = useState({
-    nom: "Dupont",
-    prenom: "Jean",
-    code: "CL12345",
-    genre: "Masculin",
-    marie: true,
-    dependants: 2,
-    education: "Master",
-    revenuDemandeur: 45000,
-    montantPret: 200000,
-    travailleurIndependant: true, // Nouveau champ
-    coemprunteur: 'Oui', // Nouveau champ
-    dureePret: 20, // Nouveau champ
-    historiqueCredit: 'Bon', // Nouveau champ
-  });
-
+  const [loanDetails, setLoanDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const handleBack = () => {
-    navigate('/Dashboard');
+    navigate("/Dashboard");
   };
 
   const handleConfirm = () => {
     alert("Informations confirmées !");
-    // Ajoutez ici toute logique supplémentaire pour le bouton "Confirmer"
+    // Add any extra logic for the "Confirm" button
   };
+
+
+
+  // Extract `id` from the route parameters or props
+  const loanId = match?.params?.id || 11; // Default to 11 if no match prop
+
+  useEffect(() => {
+    const fetchLoanDetails = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/loan_prediction/${loanId}/`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setLoanDetails(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLoanDetails();
+  }, [loanId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+ /* if (!loanPrediction) {
+    return <div>Loading...</div>;
+  }*/
+
 
   return (
     <div>
@@ -51,7 +73,7 @@ const ScorerClient = () => {
               <input
                 type="text"
                 id="nom"
-                value={client.nom || ''}
+                value={loanDetails?.client_n}
                 readOnly
                 className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
               />
@@ -65,25 +87,12 @@ const ScorerClient = () => {
               <input
                 type="text"
                 id="prenom"
-                value={client.prenom || ''}
+                value={loanDetails?.client_pr}
                 readOnly
                 className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
               />
             </div>
 
-            {/* Code */}
-            <div>
-              <label htmlFor="code" className="block text-sm font-semibold text-gray-900">
-                Code
-              </label>
-              <input
-                type="text"
-                id="code"
-                value={client.code || ''}
-                readOnly
-                className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
-              />
-            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-3 mt-6">
@@ -95,7 +104,7 @@ const ScorerClient = () => {
               <input
                 type="text"
                 id="genre"
-                value={client.genre || ''}
+                value={loanDetails?.gender || "Loading..."}
                 readOnly
                 className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
               />
@@ -109,7 +118,7 @@ const ScorerClient = () => {
               <input
                 type="text"
                 id="marie"
-                value={client.marie ? 'Oui' : 'Non'}
+                value={loanDetails?.married ? "Non" : "Oui"}
                 readOnly
                 className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
               />
@@ -123,7 +132,7 @@ const ScorerClient = () => {
               <input
                 type="number"
                 id="dependants"
-                value={client.dependants || 0}
+                value={loanDetails?.dependents || "Loading..."}
                 readOnly
                 className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
               />
@@ -139,7 +148,7 @@ const ScorerClient = () => {
               <input
                 type="text"
                 id="education"
-                value={client.education || ''}
+                value={loanDetails?.education}
                 readOnly
                 className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
               />
@@ -153,7 +162,7 @@ const ScorerClient = () => {
               <input
                 type="number"
                 id="revenuDemandeur"
-                value={client.revenuDemandeur || 0}
+                value={loanDetails?.applicant_income}
                 readOnly
                 className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
               />
@@ -167,7 +176,7 @@ const ScorerClient = () => {
               <input
                 type="number"
                 id="montantPret"
-                value={client.montantPret || 0}
+                value={loanDetails?.loan_amount}
                 readOnly
                 className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
               />
@@ -184,7 +193,7 @@ const ScorerClient = () => {
               <input
                 type="text"
                 id="travailleurIndependant"
-                value={client.travailleurIndependant ? 'Oui' : 'Non'}
+                value={loanDetails?.dependents ? 'Oui' : 'Non'}
                 readOnly
                 className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
               />
@@ -198,7 +207,7 @@ const ScorerClient = () => {
               <input
                 type="text"
                 id="coemprunteur"
-                value={client.coemprunteur || 'Non'}
+                value={loanDetails?.coapplicant_income}
                 readOnly
                 className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
               />
@@ -212,7 +221,7 @@ const ScorerClient = () => {
               <input
                 type="number"
                 id="dureePret"
-                value={client.dureePret || 0}
+                value={loanDetails?.loan_amount_term}
                 readOnly
                 className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
               />
@@ -228,7 +237,7 @@ const ScorerClient = () => {
               <input
                 type="text"
                 id="historiqueCredit"
-                value={client.historiqueCredit || 'Inconnu'}
+                value={loanDetails?.credit_history? "Bon" : "Mauvais" }
                 readOnly
                 className="mt-2.5 block w-full rounded-md px-3.5 py-2 bg-gray-100 shadow-sm ring-1 ring-gray-300"
               />
