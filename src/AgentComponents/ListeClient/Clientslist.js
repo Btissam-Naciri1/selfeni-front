@@ -50,10 +50,11 @@ const ClientsList = () => {
     currentPage * itemsPerPage
   );
 
-  const handleDetails = (loan_prediction) => {
-    navigate(`/ScorerClient/${loan_prediction}`);
-    console.log("Afficher les détails du client :", loan_prediction);
-};
+  const handleDetails = (loan_prediction, credit_id) => {
+    // Passing both loan_prediction and credit_id in the path
+    navigate(`/ScorerClient/${loan_prediction}/${credit_id}`);
+    console.log("Afficher les détails du client :", loan_prediction, credit_id);
+  };
 
 
   return (
@@ -84,7 +85,7 @@ const ClientsList = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{credit.statut}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm flex gap-2">
                     <button
-                      onClick={() => handleDetails(credit.loan_prediction)}
+                      onClick={() => handleDetails(credit.loan_prediction,credit.id)}
                       className="px-3 py-1 text-sm border border-indigo-500 text-indigo-500 rounded-md hover:bg-indigo-50"
                     >
                       Détails

@@ -49,7 +49,7 @@ export default function Formulaire() {
             <div className="w-full max-w-4xl mx-auto flex items-center relative mb-8">
                 <div className={`flex-1 text-center py-4 ${step === 1 ? 'bg-indigo-600 text-white' : 'bg-gray-300'} rounded-lg mx-2`}>
                     <span className="font-bold text-lg">1</span>
-                    <p className="text-sm">Commencer mon crédit</p>
+                    <p className="text-sm">Simuler mon crédit</p>
                 </div>
                 <div className={`flex-1 text-center py-4 ${step === 2 ? 'bg-indigo-600 text-white' : 'bg-gray-300'} rounded-lg mx-2`}>
                     <span className="font-bold text-lg">2</span>
@@ -67,7 +67,7 @@ export default function Formulaire() {
                     {step === 1 && (
                         <>
                             <h2 className="text-2xl font-extrabold text-gray-800 mb-8 text-center">
-                                Commencer mon crédit
+                                Simuler mon crédit
                             </h2>
                             <form>
                                 {/* Amount */}

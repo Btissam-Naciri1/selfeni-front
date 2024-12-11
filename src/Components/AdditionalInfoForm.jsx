@@ -290,11 +290,11 @@ const AdditionalInfoForm = ({ handlePreviousStep, handleValidation }) => {
         </div>
       </form>
 
-      {loanStatus && (
+      {/* {loanStatus && (
         <p className="mt-4 text-green-600">
           Résultat: Votre prêt est {loanStatus}.
         </p>
-      )}
+      )} */}
       {error && (
         <p className="mt-4 text-red-600">
           Erreur: {error}.

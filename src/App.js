@@ -39,7 +39,7 @@ function App() {
                 <Route path="/formulaire" element={<Formulaire />} />
                 <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/AgentProfil" element={<AgentProfil />} />
-                <Route path="/ScorerClient/:loanPredictionId" element={<ScorerClient />} />
+                <Route path="/ScorerClient/:loanPredictionId/:credit_id" element={<ScorerClient />} />
                 <Route path="/FaqsPage" element={<FaqsPage />} />
                 <Route path="/moncompte" element={<MonCompte />} />
                 <Route path="/EditProfile" element={<EditProfile />} />
