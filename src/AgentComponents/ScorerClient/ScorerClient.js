@@ -1,14 +1,16 @@
 import React, { useState ,useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../footer/footer'; // Assurez-vous que le chemin est correct
 
 
-const ScorerClient = ({ match }) => {
+const ScorerClient = () => {
   const navigate = useNavigate();
+  const { loanPredictionId } = useParams(); // Extract `loanPredictionId` from the route params
   const [loanDetails, setLoanDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const handleBack = () => {
     navigate("/Dashboard");
   };
@@ -18,15 +20,10 @@ const ScorerClient = ({ match }) => {
     // Add any extra logic for the "Confirm" button
   };
 
-
-
-  // Extract `id` from the route parameters or props
-  const loanId = match?.params?.id || 11; // Default to 11 if no match prop
-
   useEffect(() => {
     const fetchLoanDetails = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/loan_prediction/${loanId}/`);
+        const response = await fetch(`http://127.0.0.1:8000/loan_prediction/${loanPredictionId}/`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -39,8 +36,8 @@ const ScorerClient = ({ match }) => {
       }
     };
 
-    fetchLoanDetails();
-  }, [loanId]);
+    if (loanPredictionId) fetchLoanDetails(); // Ensure loanPredictionId is defined before making the API call
+  }, [loanPredictionId]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -49,10 +46,6 @@ const ScorerClient = ({ match }) => {
   if (error) {
     return <div>Error: {error}</div>;
   }
- /* if (!loanPrediction) {
-    return <div>Loading...</div>;
-  }*/
-
 
   return (
     <div>
