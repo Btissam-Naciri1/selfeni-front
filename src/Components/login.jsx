@@ -29,7 +29,7 @@ const Login = () => {
                     return;
                 }
 
-                const response = await axios.post('http://127.0.0.1:8000/api/user/register/', {
+                const response = await axios.post('http://54.86.182.184/api/user/register/', {
                     nom,
                     prenom,
                     email,
@@ -44,7 +44,7 @@ const Login = () => {
                 navigate('/');  // Redirige vers la page d'accueil après une inscription réussie
             } else {
                 // Connexion
-                const response = await axios.post('http://127.0.0.1:8000/api/login/', {
+                const response = await axios.post('http://54.86.182.184/api/login/', {
                     email,
                     password,
                 });
