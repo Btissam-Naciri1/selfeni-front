@@ -40,7 +40,7 @@ const AdditionalInfoForm = ({ handlePreviousStep, handleValidation }) => {
   
       // API 1: Predict loan status
       const predictLoanResponse = await fetch(
-        "http://localhost:8000/ml_integration/predict-loan-status/add",
+        "http://54.86.182.184/ml_integration/predict-loan-status/add",
         {
           method: "POST",
           headers,
@@ -59,7 +59,7 @@ const AdditionalInfoForm = ({ handlePreviousStep, handleValidation }) => {
   
       // API 2: Create credit
       const creditsResponse = await axios.post(
-        "http://127.0.0.1:8000/api/credits/",
+        "http://54.86.182.184/api/credits/",
         {
           montant_demande: formData.LoanAmount,      // Use `LoanAmount` from `formData`
           duree: formData.Loan_Amount_Term,         // Use `Loan_Amount_Term` from `formData`
