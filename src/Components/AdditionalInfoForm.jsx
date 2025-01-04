@@ -59,7 +59,7 @@ const AdditionalInfoForm = ({ handlePreviousStep, handleValidation }) => {
   
       // API 2: Create credit
       const creditsResponse = await axios.post(
-        "http://54.86.182.184/api/credits/",
+        "http://54.86.182.184:8000/api/credits/",
         {
           montant_demande: formData.LoanAmount,      // Use `LoanAmount` from `formData`
           duree: formData.Loan_Amount_Term,         // Use `Loan_Amount_Term` from `formData`

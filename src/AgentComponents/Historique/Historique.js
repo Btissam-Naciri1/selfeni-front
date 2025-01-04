@@ -15,7 +15,7 @@ const Historique = () => {
     const fetchCredits = async () => {
       try {
         const token = localStorage.getItem('access_token');
-        const response = await axios.get('http://54.86.182.184/api/admin/credits/', {
+        const response = await axios.get('http://54.86.182.184:8000/api/admin/credits/', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCredits(response.data); // Set data only once

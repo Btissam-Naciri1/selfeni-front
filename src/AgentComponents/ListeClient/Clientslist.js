@@ -16,7 +16,7 @@ const ClientsList = () => {
     const fetchCredits = async () => {
       try {
         const token = localStorage.getItem('access_token');
-        const response = await axios.get('http://54.86.182.184/api/credits/encours/admins/', {
+        const response = await axios.get('http://54.86.182.184:8000/api/credits/encours/admins/', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCredits(response.data); // Set data only once

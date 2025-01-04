@@ -35,7 +35,7 @@ const ScorerClient = () => {
       const token = localStorage.getItem('access_token');
   
       // Make the API request to approve the credit
-      const response = await fetch(`http://54.86.182.184/api/credits/${credit_id}/approve-credit-status/`, {
+      const response = await fetch(`http://54.86.182.184:8000/api/credits/${credit_id}/approve-credit-status/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const ScorerClient = () => {
       const token = localStorage.getItem('access_token');
   
       // Make the API request to approve the credit
-      const response = await fetch(`http://54.86.182.184/api/credits/${credit_id}/reject-credit-status/`, {
+      const response = await fetch(`http://54.86.182.184:8000/api/credits/${credit_id}/reject-credit-status/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ const ScorerClient = () => {
   useEffect(() => {
     const fetchLoanDetails = async () => {
       try {
-        const response = await fetch(`http://54.86.182.184/loan_prediction/${loanPredictionId}/`);
+        const response = await fetch(`http://54.86.182.184:8000/loan_prediction/${loanPredictionId}/`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

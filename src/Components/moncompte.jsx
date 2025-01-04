@@ -17,7 +17,7 @@ const MonCompte = () => {
         const fetchProfile = async () => {
             try {
                 const token = localStorage.getItem("access_token"); // Get access token from localStorage
-                const response = await axios.get("http://54.86.182.184/api/profile/", {
+                const response = await axios.get("http://54.86.182.184:8000/api/profile/", {
                     headers: {
                         Authorization: `Bearer ${token}`, // Include the token in the Authorization header
                     },
@@ -39,7 +39,7 @@ const MonCompte = () => {
         const fetchCredits = async () => {
             try {
                 const token = localStorage.getItem("access_token"); // Get the token from localStorage
-                const response = await axios.get("http://54.86.182.184/api/credits/", {
+                const response = await axios.get("http://54.86.182.184:8000/api/credits/", {
                     headers: {
                         Authorization: `Bearer ${token}`, // Include the Authorization header
                     },

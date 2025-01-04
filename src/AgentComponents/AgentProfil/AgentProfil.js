@@ -36,7 +36,7 @@ export default function AgentProfil() {
           const token = localStorage.getItem('access_token'); 
   
           axios
-              .get('http://54.86.182.184/api/profile/', {
+              .get('http://54.86.182.184:8000/api/profile/', {
                   headers: {
                       Authorization: `Bearer ${token}`,
                   },
@@ -62,7 +62,7 @@ export default function AgentProfil() {
 
         axios
             .post(
-                'http://54.86.182.184/api/change-password/',
+                'http://54.86.182.184:8000/api/change-password/',
                 { old_password: oldPassword, new_password: newPassword },
                 {
                     headers: {

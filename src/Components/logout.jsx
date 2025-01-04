@@ -16,7 +16,7 @@ const Logout = ({ onLogout }) => {
     
             // Send the logout request with Authorization header
             await axios.post(
-                'http://54.86.182.184/api/logout/',
+                'http://54.86.182.184:8000/api/logout/',
                 { refresh_token: refreshToken },
                 {
                     headers: {

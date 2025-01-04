@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance
 const api = axios.create({
-    baseURL: 'http://54.86.182.184/api/',
+    baseURL: 'http://54.86.182.184:8000/api/',
 });
 
 // Add a request interceptor
@@ -29,7 +29,7 @@ api.interceptors.response.use(
             const refreshToken = localStorage.getItem('refresh_token');
             if (refreshToken) {
                 try {
-                    const { data } = await axios.post('http://54.86.182.184/api/token/refresh/', {
+                    const { data } = await axios.post('http://54.86.182.184:8000/api/token/refresh/', {
                         refresh: refreshToken,
                     });
                     localStorage.setItem('access_token', data.access);

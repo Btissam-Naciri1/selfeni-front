@@ -39,7 +39,7 @@ const EditProfile = () => {
 
         axios
             .post(
-                'http://54.86.182.184/api/change-password/',
+                'http://54.86.182.184:8000/api/change-password/',
                 { old_password: oldPassword, new_password: newPassword },
                 {
                     headers: {
@@ -77,7 +77,7 @@ const EditProfile = () => {
         const fetchProfile = async () => {
             try {
                 const token = localStorage.getItem("access_token"); // Get JWT token
-                const response = await axios.get("http://54.86.182.184/api/profile/", {
+                const response = await axios.get("http://54.86.182.184:8000/api/profile/", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -116,7 +116,7 @@ const EditProfile = () => {
         try {
             const token = localStorage.getItem("access_token");
             const response = await axios.patch(
-                `http://54.86.182.184/api/users/${userId}/`,
+                `http://54.86.182.184:8000/api/users/${userId}/`,
                 userData,
                 {
                     headers: {
