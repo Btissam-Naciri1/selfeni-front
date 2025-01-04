@@ -40,7 +40,7 @@ const AdditionalInfoForm = ({ handlePreviousStep, handleValidation }) => {
   
       // API 1: Predict loan status
       const predictLoanResponse = await fetch(
-        "http://54.86.182.184/ml_integration/predict-loan-status/add",
+        "http://54.86.182.184:8000/ml_integration/predict-loan-status/add",
         {
           method: "POST",
           headers,
